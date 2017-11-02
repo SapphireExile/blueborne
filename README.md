@@ -25,10 +25,6 @@ Dependencies:
     - sudo apt-get install libbluetooth-dev
     - sudo pip2 install pybluez pwn
 
-    A CSR USB bluetooth adapter. We need to change the MAC address, and so we use a vendor specific HCI command to do this
-    for the CSR bluetooth adapter.
-    - An alternative adapter can also be used - the only thing to alter is the set_rand_bdaddr function.
-
 To run:
 
     sudo python2 doit.py hci0 <target-bdaddr> <attacker-ip>
