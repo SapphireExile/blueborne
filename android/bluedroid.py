@@ -2,7 +2,7 @@ import btsock
 import struct
 import sdp
 
-# This is required to assure than the SDP respones are splitted to multiple fragments,
+# This is required to assure than the SDP respones are split to multiple fragments,
 # thus assuering that cont_state is attached to the responses.
 MIN_MTU = 48
 SDP_PSM = 1
